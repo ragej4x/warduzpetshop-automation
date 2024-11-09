@@ -1,7 +1,7 @@
 # warduzpetshop-automation
 
 
-<h1>Set Up the Web Server</h1>
+<h3>Set Up the Web Server</h3>
 
 Use the ESP8266WiFi.h and ESPAsyncWebServer.h libraries to create a basic web server.
 Implement password protection so only Warduz Petshop staff can access it.
