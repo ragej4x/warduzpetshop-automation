@@ -9,7 +9,7 @@
         $color = $_POST['color'];
         print("debug color : " . $color);
     } else {
-        $color = '#ffffff'; // Default color if none selected
+        $color = '#ffffff'; 
     }
     
 ?>

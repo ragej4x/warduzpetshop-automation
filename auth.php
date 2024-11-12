@@ -7,7 +7,6 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
     
-        // Corrected to fetch data from the database
         $query = "SELECT * FROM users WHERE username = ?";
         $stmt = $mysqli->prepare($query);
         $stmt->bind_param("s", $username);
@@ -19,7 +18,6 @@
         
 
         if ($user['username'] == $username && $user['password'] == $password) {
-            // Login successful
             $_SESSION['username'] = $user['username'];
             header('Location: index.php');
             exit();
@@ -49,7 +47,7 @@
         
 
         <div class="container">
-<!-- basic login form -->
+<!-- basic login form '-->
             <div class="login-box" >
                 <div class="topbox"><img id="image" src="media/banner.png" style=" width:100%; height:100%; border-radius: 7.5px "  alt=""></div>
             <form  method="post" class="font">
