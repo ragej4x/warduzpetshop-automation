@@ -17,7 +17,7 @@ body , html{
 }
 
 .container {
-    
+    margin-top: -30px;
     max-width: max-content;
     margin-left: auto;
     margin-right: auto;
@@ -49,7 +49,7 @@ div[class="config-body"]{
     max-width: max-content;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 40px;
+    padding-top: 10px;
 
 }
 
@@ -77,7 +77,6 @@ table ,th {
 
 .button {
     margin-left: 10px;
-
     background: #fca18f;
     border: none;
     border-radius: 12px;
@@ -100,7 +99,7 @@ input[name="color"]{
     border-radius: 12px;
     padding: 0;
     cursor: pointer;
-    width: 100px;
+    width: 190px;
     height: 30px;
     transition: ease 0.5s;
     margin-left: 10px;
@@ -108,7 +107,7 @@ input[name="color"]{
   
   input[type=color]::-webkit-color-swatch-wrapper {
     background-color: #ffffff00;
-    width: 100px;
+    width: 190px;
     height: 50px;
     border: none;
     background: #fca18f;
@@ -116,11 +115,10 @@ input[name="color"]{
     border-radius: 12px;
     padding: 0;
     cursor: pointer;
-    width: 100px;
-    height: 30px;
     transition: ease 0.5s;
 
   }
+
 
 
 
@@ -147,4 +145,20 @@ footer p{
 footer{
     margin: 15px;
     margin-top: 150px;
+}
+
+
+.led-btn {
+    width: 80px;
+    height: 20px;
+    margin: 6px;
+    cursor:pointer;
+    background: #fca18f;
+    border: none;
+    border-radius: 12px;
+    transition: ease 0.5s;
+}
+
+.led-btn:hover { 
+    background: #fcc2b6;
 }

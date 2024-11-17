@@ -45,47 +45,47 @@
 
                     </tr>
                     <tr>
-                        <td>numnunm</td>
-                        <td>numnum</td>
+                        <td><?php include 'read_ph_data.php'; ?></td>
+                        <td>
+                        <td><div style="height: 150px; width:auto; margin-left:-210px; overflow: auto; border: 1px solid #ccc; font-family: monospace;">
+    <?php 
+      // Read the contents of the file "python/ph_log.txt"
+      $file_content = file_get_contents("python/ph_log.txt");
+
+      // Split the file into lines
+      $lines = explode("\n", $file_content);
+
+      // Process each line for formatting
+      foreach ($lines as $line) {
+          // Trim the line and skip if it's empty
+          $line = trim($line);
+          if (!empty($line)) {
+              echo htmlspecialchars($line) . "<br />";
+          }
+      }
+    ?></div></td>
+
+</td>
+
                         
                     </tr>
 
-                    <table style="width:125px; margin-top:10px;">
+                    <table style="width:410px; margin-top:10px;">
 
                     <form action="" method="post" id="colorForm">
                     <tr>
-                    <th >LED Color</th>
+                    <th>LED Color Config</th>
+                    <th>LED Modes</th>
                     </tr>
 
                     <tr>
                         <td><input type="color" id="color" name="color" value="<?php echo $color; ?>" onchange="updateColor()"></td>
-                    </tr>
-
-
-                    <table style="width:125px; margin-top:10px; margin-left:285px; margin-top:-105px;">
-
-                    <form action="" method="post" id="colorForm">
-                    <tr>
-                    <th>Check pH</th>
-                    </tr>
-
-                    <tr>
-                        <td><input class="button" type="button" name="check-ph" value="Start"></td>
+                        <td><button class='led-btn' >Static</button> <button  class='led-btn'>Blink</button> <button  class='led-btn'>Rainbow</button> <button  class='led-btn'>Off</button></td>
                         
                     </tr>
 
 
-                    <table style="width:125px; margin-top:10px; margin-left:142px; margin-top:-105px;">
 
-                    <form action="" method="post" id="colorForm">
-                    <tr>
-                    <th>Check Temp</th>
-                    </tr>
-
-                    <tr>
-                        <td><input class="button" type="button" name="check-temp" value="Start"></td>
-                        
-                    </tr>
 
 
 
@@ -122,5 +122,8 @@
     function updateColor() {
         document.getElementById("colorForm").submit();
     }
+
+    const logContainer = document.getElementById('log-container');
+    logContainer.scrollTop = logContainer.scrollHeight;
     </script>
 </html>

@@ -15,8 +15,6 @@
         $user = $result->fetch_assoc();
 
 
-        
-
         if ($user['username'] == $username && $user['password'] == $password) {
             $_SESSION['username'] = $user['username'];
             header('Location: index.php');
