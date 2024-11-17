@@ -45,10 +45,9 @@
 
                     </tr>
                     <tr>
-                        <td><?php include 'read_ph_data.php'; ?></td>
-                        <td>
-                        <td><div style="height: 150px; width:auto; margin-left:-210px; overflow: auto; border: 1px solid #ccc; font-family: monospace;">
-    <?php 
+                        <td></td>
+
+                        <td><div id='log-container' style="height: 100px; width:auto; margin-left: auto; overflow: auto; border: 1px solid #ccc; font-family: monospace;"><?php 
       // Read the contents of the file "python/ph_log.txt"
       $file_content = file_get_contents("python/ph_log.txt");
 
@@ -64,8 +63,6 @@
           }
       }
     ?></div></td>
-
-</td>
 
                         
                     </tr>
