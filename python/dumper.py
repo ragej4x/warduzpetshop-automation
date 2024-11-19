@@ -1,6 +1,7 @@
 import serial
+import time
 
-arduino_port = "/dev/ttyUSB0"  # Replace with your port
+arduino_port = "COM3"  # Replace with your port
 baud_rate = 9600
 output_file = "ph_log.txt"
 
@@ -11,8 +12,8 @@ try:
             if ser.in_waiting > 0:
 
                 line = ser.readline().decode("utf-8").strip()
-                print(line)
-                file.write(line + "\n")
+                timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+                file.write(f"{timestamp}, {line}\n")
                 file.flush()  # Ensure data is written to disk
 
 except Exception as e:
