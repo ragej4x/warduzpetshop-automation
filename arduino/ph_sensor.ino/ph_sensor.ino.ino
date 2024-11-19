@@ -1,56 +1,33 @@
-#define PH_OFFSET -1.00 //if there have offset
+#define SensorPin A0  // the pH meter Analog output is connected to A0
 
-#define SensorPin A0        // the pH meter Analog output is connected with the Arduino’s Analog
-unsigned long int avgValue;  //Store the average value of the sensor feedback
-float b;
-int buf[10],temp;
+// Refined calibration constants
+#define V_NEUTRAL 2.5      // Voltage at pH 7.0
+#define PH_NEUTRAL 7.0     // pH corresponding to V_NEUTRAL
+#define SCALE_FACTOR -1.2  // Adjusted scale factor for more accurate pH calculation
+#define PH_OFFSET 0     // Adjusted offset to correct acidic readings
 
-
-void setup()
-{
-  pinMode(13,OUTPUT);  
-  Serial.begin(9600);  
-  Serial.println("Ready");    //Test the serial monitor
+void setup() {
+  Serial.begin(9600);
+  Serial.println("pH Sensor Calibration");
 }
 
-void ph_sensor(){
-  
-  
-  for(int i=0;i<10;i++)       //Get 10 sample value from the sensor for smooth the value
-  { 
-    buf[i]=analogRead(SensorPin);
-    delay(10);
-  }
-  for(int i=0;i<9;i++)        //sort the analog from small to large
-  {
-    for(int j=i+1;j<10;j++)
-    {
-      if(buf[i]>buf[j])
-      {
-        temp=buf[i];
-        buf[i]=buf[j];
-        buf[j]=temp;
-      }
-    }
-  }
-  avgValue=0;
-  for(int i=2;i<8;i++)                      //take the average value of 6 center sample
-    avgValue+=buf[i];
-  float phValue=(float)avgValue*5.0/1024/6; //convert the analog into millivolt
-  phValue=3.5*phValue;                      //convert the millivolt into pH value
+void loop() {
+  // Read the raw ADC value
+  int rawValue = analogRead(SensorPin);
 
-  phValue = phValue + PH_OFFSET;
-  
-  Serial.print("    pH:");  
-  Serial.print(phValue,2);
-  Serial.println(" ");
-  digitalWrite(13, HIGH);       
-  delay(800);
-  digitalWrite(13, LOW); 
-}
+  // Convert raw ADC value to voltage
+  float voltage = rawValue * 5.0 / 1024.0;
 
-void loop()
-{
+  // Calculate pH
+  float phValue = PH_NEUTRAL + ((voltage - V_NEUTRAL) * SCALE_FACTOR) + PH_OFFSET;
 
-  ph_sensor();
+  // Print results to the serial monitor
+  Serial.print("Raw ADC: ");
+  Serial.print(rawValue);
+  Serial.print("\tVoltage: ");
+  Serial.print(voltage, 2);
+  Serial.print("\tCalibrated pH: ");
+  Serial.println(phValue, 2);
+
+  delay(1000);
 }
