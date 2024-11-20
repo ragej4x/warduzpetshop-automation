@@ -21,12 +21,7 @@ void loop() {
   // Calculate pH
   float phValue = PH_NEUTRAL + ((voltage - V_NEUTRAL) * SCALE_FACTOR) + PH_OFFSET;
 
-  // Print results to the serial monitor
-  Serial.print("Raw ADC: ");
-  Serial.print(rawValue);
-  Serial.print("\tVoltage: ");
-  Serial.print(voltage, 2);
-  Serial.print("\tCalibrated pH: ");
+
   Serial.println(phValue, 2);
 
   delay(1000);
