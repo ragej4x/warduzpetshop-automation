@@ -11,7 +11,70 @@
     } else {
         $color = '#ffffff'; 
     }
-    
+
+
+//path kung saan nyo gusto lagay dapat sa first line may '/'
+$configFilePath = __DIR__ . '/live-monitor/config.ini';
+
+
+//convert lng sa RGB
+function hexToRgb($hex) {
+    $hex = str_replace("#", "", $hex);
+    if (strlen($hex) == 6) {
+        list($r, $g, $b) = array(
+            hexdec(substr($hex, 0, 2)),
+            hexdec(substr($hex, 2, 2)),
+            hexdec(substr($hex, 4, 2))
+        );
+        return ['red' => $r, 'green' => $g, 'blue' => $b];
+    }
+    return ['red' => 0, 'green' => 0, 'blue' => 0];
+}
+
+if (file_exists($configFilePath)) {
+    $config = parse_ini_file($configFilePath);
+    $red = $config['red'] ?? 0;
+    $green = $config['green'] ?? 0;
+    $blue = $config['blue'] ?? 0;
+    $color = sprintf("#%02x%02x%02x", $red, $green, $blue);
+
+} else {
+    $red = $green = $blue = 0;
+    $color = "#000000";
+    $mode = 0;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['color'])) {
+        $newColor = $_POST['color'];
+        $rgb = hexToRgb($newColor);
+
+
+
+        $newConfig = [
+            'red' => $rgb['red'],
+            'green' => $rgb['green'],
+            'blue' => $rgb['blue'],
+            'mode' => $_POST['mode'] 
+        ];
+    } elseif (isset($_POST['mode'])) {
+        $newConfig = [
+            'red' => $red, 
+            'green' => $green, 
+            'blue' => $blue, 
+            'mode' => $_POST['mode']
+        ];
+    }
+
+    $configContent = '';
+    foreach ($newConfig as $key => $value) {
+        $configContent .= "$key=$value\n";
+    }
+
+    file_put_contents($configFilePath, $configContent);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,21 +103,35 @@
                         <th>pH Level</th>
                     </tr>
                     <tr>
-                        <td>Some number</td>
-                        <td>pH level number</td>
+                        <td><div style="text-align:center;" id="temp-value"></div></td>
+                        <td><div style="text-align:center;" id="ph-value"></div></td>
 
                     </tr>
                     <tr>
-                    <td><div id='log-container' style="height: 100px; width:auto; margin-left: auto; overflow: auto; border: 1px solid #ccc; font-family: monospace;"><?php 
-      // Read the contents of the file "python/ph_log.txt"
-      $file_content = file_get_contents("python/temperature_log.txt");
+                    <td><div id='log-container-temp' style="height: 100px; width:auto; margin-left: auto; overflow: auto; border: 1px solid #ccc; font-family: monospace;"><?php 
+      $file_content = file_get_contents("live-monitor/temperature_log.txt");
 
-      // Split the file into lines  
       $lines = explode("\n", $file_content);
 
-      // Process each line for formatting
+
       foreach ($lines as $line) {
-          // Trim the line and skip if it's empty
+
+          $line = trim($line);
+          if (!empty($line)) {
+              echo htmlspecialchars($line) . "<br />";
+          }
+      }
+    ?></div>
+    
+
+</td>
+
+        <td><div id='log-container-ph' style="height: 100px; width:auto; margin-left: auto; overflow: auto; border: 1px solid #ccc; font-family: monospace;"><?php 
+      $file_content = file_get_contents("live-monitor/ph_log.txt");
+
+      $lines = explode("\n", $file_content);
+
+      foreach ($lines as $line) {
           $line = trim($line);
           if (!empty($line)) {
               echo htmlspecialchars($line) . "<br />";
@@ -62,39 +139,28 @@
       }
     ?></div></td>
 
-                        <td><div id='log-container' style="height: 100px; width:auto; margin-left: auto; overflow: auto; border: 1px solid #ccc; font-family: monospace;"><?php 
-      // Read the contents of the file "python/ph_log.txt"
-      $file_content = file_get_contents("python/ph_log.txt");
+            
+        </tr>
 
-      // Split the file into lines
-      $lines = explode("\n", $file_content);
+        <table style="width:410px; margin-top:10px;">
 
-      // Process each line for formatting
-      foreach ($lines as $line) {
-          // Trim the line and skip if it's empty
-          $line = trim($line);
-          if (!empty($line)) {
-              echo htmlspecialchars($line) . "<br />";
-          }
-      }
-    ?></div></td>
+        <form action="" method="post" id="colorForm">
+        <tr>
+        <th>LED Color Config</th>
+        <th>LED Modes</th>
+        </tr>
+        <tr>
+    <td>
+        <input type="color" id="color" name="color" value="<?php echo $color; ?>" onchange="updateColor()">
+    </td>
+    <td>
+        <button class="led-btn" type="submit" name="mode" value="0" onsubmit="this.submit()">Static</button>
+        <button class="led-btn" type="submit" name="mode" value="1" onsubmit="this.submit()">Blink</button>
+        <button class="led-btn" type="submit" name="mode" value="2" onsubmit="this.submit()" >Rainbow</button>
+        <button class="led-btn" type="submit" name="mode" value="3" onsubmit="this.submit()">Off</button>
+    </td>
+</tr>
 
-                        
-                    </tr>
-
-                    <table style="width:410px; margin-top:10px;">
-
-                    <form action="" method="post" id="colorForm">
-                    <tr>
-                    <th>LED Color Config</th>
-                    <th>LED Modes</th>
-                    </tr>
-
-                    <tr>
-                        <td><input type="color" id="color" name="color" value="<?php echo $color; ?>" onchange="updateColor()"></td>
-                        <td><button class='led-btn' >Static</button> <button  class='led-btn'>Blink</button> <button  class='led-btn'>Rainbow</button> <button  class='led-btn'>Off</button></td>
-                        
-                    </tr>
 
 
 
@@ -130,12 +196,29 @@
 
     <script>
 
-
     function updateColor() {
         document.getElementById("colorForm").submit();
     }
 
-    const logContainer = document.getElementById('log-container');
-    logContainer.scrollTop = logContainer.scrollHeight;
+    const logContainer_ph = document.getElementById('log-container-ph');
+    logContainer_ph.scrollTop = logContainer_ph.scrollHeight;
+
+    const logContainer_temp = document.getElementById('log-container-temp');
+    logContainer_temp.scrollTop = logContainer_temp.scrollHeight;
+
+    //ddisplay lng ung live temp and pH
+    async function fetchLiveData() {
+        try {
+            const response = await fetch('live-monitor/get_live_data.php'); 
+            const data = await response.json();
+            document.getElementById('ph-value').textContent = `${data.ph} pH`;
+            document.getElementById('temp-value').textContent = `${data.temperature}`;
+        } catch (error) {
+            console.error('Error fetching live data:', error);
+        }
+    }
+
+    setInterval(fetchLiveData, 1000);
+    fetchLiveData(); // loadss
     </script>
 </html>

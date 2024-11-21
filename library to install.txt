@@ -1,0 +1,7 @@
+you need npm and python
+
+
+npm install express ws serialport
+
+
+pip install pyserial
