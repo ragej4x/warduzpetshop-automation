@@ -180,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         
         <footer>
-        <a  href="inf.html" style="text-align:right;">How to use</a>
+        <a  href="how_to_use.html" style="text-align:right;">How to use</a>
         
         <p>2024 @Test All right reserved or about us </p>
         
