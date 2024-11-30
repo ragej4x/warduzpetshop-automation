@@ -36,9 +36,10 @@ body , html{
 }
 
 div[class="config-body"]{
-    width: 750px;
-    height: 500px;
-
+    width: 950px;
+    height: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
     box-shadow: 10px 10px 12px 1.5px #d1d1d1;
     background-color: #7AB2D3;
     border-bottom-left-radius: 10px;
@@ -49,14 +50,14 @@ div[class="config-body"]{
     max-width: max-content;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 10px;
+    padding: 6%;
 
 }
 
 th ,tr{
    
-    width: 200px;
-    height: 50px;
+    width: 350px;
+    height: 70px;
     
     
 }
@@ -73,6 +74,7 @@ table ,th {
     box-shadow: 1px 1px 10px 0.5px #a1a1a1;
     border-radius: 10px;
     background-color: #FAF7F0;
+
 }
 
 .button {
@@ -102,7 +104,7 @@ input[name="color"]{
     width: 190px;
     height: 30px;
     transition: ease 0.5s;
-    margin-left: 10px;
+    margin-left: 50px;
 }
   
   input[type=color]::-webkit-color-swatch-wrapper {
@@ -144,7 +146,7 @@ footer p{
 
 footer{
     margin: 15px;
-    margin-top: 120px;
+    margin-top: 8%;
 }   
 
 
@@ -161,4 +163,45 @@ footer{
 
 .led-btn:hover { 
     background: #fcc2b6;
+}
+
+
+#info{
+    position: absolute;
+    height: 50px;
+    margin: 6px;
+    width: 170px;
+    cursor:pointer;
+    background: #fca18f;
+    border: none;
+    border-radius: 12px;
+    transition: ease 0.5s;
+    margin-left: 34%;
+    margin-top: 20px;
+
+}   
+
+#info:hover{
+    background: #fcc2b6;
+
+}
+
+#about{
+    position: absolute;
+    height: 50px;
+    margin: 6px;
+    width: 170px;
+    cursor:pointer;
+    background: #fca18f;
+    border: none;
+    border-radius: 12px;
+    transition: ease 0.5s;
+    margin-left: 34%;
+    margin-top: 100px;
+    
+}   
+
+#about:hover{
+    background: #fcc2b6;
+
 }

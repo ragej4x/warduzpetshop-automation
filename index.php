@@ -1,7 +1,7 @@
 <?php
     session_start();
         if (!isset($_SESSION['username'])) {
-        header('Location: auth.php');
+        header('Location: how_to_use.html');
         exit();
     }
 
@@ -99,8 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="monitor-table">
                     <table>
                     <tr>
-                        <th>Water Temperature</th>
-                        <th>pH Level</th>
+                        <th>Water Temperature <img id="temp-warning" style="width: 30px; position: absolute; margin-left: 20px; margin-top: -5px;" src="media/warning.png" alt=""></th>
+                        <th>pH Level <img id="ph-warning" style="width: 30px; position: absolute; margin-left: 20px; margin-top: -5px;" src="media/warning.png" alt=""></th>
                     </tr>
                     <tr>
                         <td><div style="text-align:center;" id="temp-value"></div></td>
@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
         </tr>
 
-        <table style="width:410px; margin-top:10px;">
+        <table style="width:500px; margin-top:10px;">
 
         <form action="" method="post" id="colorForm">
         <tr>
@@ -152,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <tr>
     <td>
         <input type="color" id="color" name="color" value="<?php echo $color; ?>" onchange="updateColor()">
+
     </td>
     <td>
         <button class="led-btn" type="submit" name="mode" value="0" onsubmit="this.submit()">Static</button>
@@ -159,28 +160,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button class="led-btn" type="submit" name="mode" value="2" onsubmit="this.submit()" >Rainbow</button>
         <button class="led-btn" type="submit" name="mode" value="3" onsubmit="this.submit()">Off</button>
     </td>
+      
 </tr>
 
+      
 
 
+    </form>
+    <a href="fish_info.html" style="text-decoration: none; color:black;"><button id="info">Fish information</idbutton>  </a>
 
+    <a href="about.html" style="text-decoration: none; color:black;"><button id="about">How to use</idbutton>  </a>
+    </table>
+    
+    </table>
+    
 
+    
+    </div>
+    
 
-
-                </form>
-                
-                </table>
-                
-                </table>
-                                
-
-                
-                </div>
-                
-        
         
         <footer>
-        <a  href="how_to_use.html" style="text-align:right;">How to use</a>
+        <!--<a  href="how_to_use.html" style="text-align:right;">How to use</a>-->
         
         <p>2024 @Test All right reserved or about us </p>
         
@@ -205,12 +206,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     const logContainer_temp = document.getElementById('log-container-temp');
     logContainer_temp.scrollTop = logContainer_temp.scrollHeight;
+    //hide ung warning sing live temp and pH
+    function hideImage(imageId) {
+        document.getElementById(imageId).style.display = 'none';
+        }
+    //show
+
+    function showImage(imageId) {
+        document.getElementById(imageId).style.display = 'block';
+    }
 
     //ddisplay lng ung live temp and pH
     async function fetchLiveData() {
         try {
             const response = await fetch('live-monitor/get_live_data.php'); 
             const data = await response.json();
+
+            if (data.ph > 8.5){
+                document.getElementById('ph-value').style.color = 'red';
+                showImage('ph-warning');
+
+
+            } else if (data.ph < 5.5){
+                document.getElementById('ph-value').style.color = 'red';
+                showImage('ph-warning');
+
+            }
+            
+            else{
+                hideImage('ph-warning');
+                document.getElementById('ph-value').style.color = 'green';
+
+            }
+
+            
+            if (data.temperature > 35){
+                document.getElementById('temp-value').style.color = 'red';
+                showImage('temp-warning');
+            }else{
+                document.getElementById('temp-value').style.color = 'green';
+                hideImage('temp-warning');
+            }
+
             document.getElementById('ph-value').textContent = `${data.ph} pH`;
             document.getElementById('temp-value').textContent = `${data.temperature}`;
         } catch (error) {

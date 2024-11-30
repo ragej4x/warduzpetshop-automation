@@ -1,23 +1,21 @@
-<?php
-$serialPort = '/dev/ttyUSB0'; 
+<div id="ph-value"></div>
+<div id="temp-value"></div>
 
-$fp = fopen($serialPort, "r");
-if (!$fp) {
-    echo "Error: Could not open serial port.";
-    exit;
-}
+<script>
 
-while (true) {
-    $data = fgets($fp); 
-    
-    if (strpos($data, 'pH:') !== false) {
-        preg_match('/pH:(\d+\.\d+)/', $data, $matches);
-        if (isset($matches[1])) {
-            $phValue = $matches[1];
-            echo "Live pH Value: " . $phValue . "<br />";
-        }
+
+
+    const response = 9; 
+    const data = 6;
+
+
+
+    if (data > 8){
+        document.getElementById('ph-value').style.color = 'red';
+    }else{
+        document.getElementById('ph-value').style.color = 'black';
     }
-    usleep(500000); 
-}
-fclose($fp);
-?>
+
+    document.getElementById('ph-value').textContent = `${data} pH`;
+
+</script>
