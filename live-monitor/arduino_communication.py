@@ -2,7 +2,7 @@ import serial
 import time
 import os
 
-arduino_port = "COM3"  #lagay nyo nlng anong port nyo
+arduino_port = "COM5"  #lagay nyo nlng anong port nyo
 baud_rate = 9600
 ph_live_file = "ph_log_live.txt"
 temp_live_file = "temperature_log_live.txt"

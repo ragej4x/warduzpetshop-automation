@@ -20,7 +20,7 @@ DallasTemperature sensors(&oneWire);
 #define PH_OFFSET 0           // Offset for calibration
 
 // Temperature and pH thresholds
-#define TEMP_HIGH_THRESHOLD 45.0   // Celsius temperature considered high
+#define TEMP_HIGH_THRESHOLD 30.0   // Celsius temperature considered high
 #define PH_LOW_THRESHOLD 5.5       // Low limit for pH
 #define PH_HIGH_THRESHOLD 8.5      // High limit for pH
 

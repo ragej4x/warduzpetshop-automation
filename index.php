@@ -99,8 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="monitor-table">
                     <table>
                     <tr>
-                        <th>Water Temperature <img id="temp-warning" style="width: 30px; position: absolute; margin-left: 20px; margin-top: -5px;" src="media/warning.png" alt=""></th>
-                        <th>pH Level <img id="ph-warning" style="width: 30px; position: absolute; margin-left: 20px; margin-top: -5px;" src="media/warning.png" alt=""></th>
+                        <th>Water Temperature <img id="temp-warning" style="width: 30px; position: absolute; margin-left: 55px; margin-top: -1.5%;" src="media/warning.png" alt=""></th>
+                        <th>pH Level  <img id="ph-warning" style="width: 30px; position: absolute; margin-left: 6%; margin-top: -1.5%;" src="media/warning.png" alt=""></th>
                     </tr>
                     <tr>
                         <td><div style="text-align:center;" id="temp-value"></div></td>
@@ -239,15 +239,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             }
 
-            
-            if (data.temperature > 35){
+            let converted_data =  Number(data.temperature.substring(0, 5));
+            if (converted_data > 30){
                 document.getElementById('temp-value').style.color = 'red';
                 showImage('temp-warning');
+                console.log("TEMP HIGH");
             }else{
                 document.getElementById('temp-value').style.color = 'green';
                 hideImage('temp-warning');
+            
+            
             }
-
+            console.log(converted_data);
             document.getElementById('ph-value').textContent = `${data.ph} pH`;
             document.getElementById('temp-value').textContent = `${data.temperature}`;
         } catch (error) {
