@@ -1,29 +1,21 @@
 <?php
-    include 'db.php';
     session_start();
     $error = false;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password'];
-    
-        $query = "SELECT * FROM users WHERE username = ?";
-        $stmt = $mysqli->prepare($query);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
 
 
-        if ($user['username'] == $username && $user['password'] == $password) {
-            $_SESSION['username'] = $user['username'];
+
+        if ($username == 'admin' && $password == '1234') {
+            $_SESSION['username'] = $username;
             header('Location: index.php');
             exit();
         } else {
             $error = true;
         }
         
-        $stmt->close();
 
 
     }
