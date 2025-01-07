@@ -27,13 +27,14 @@
 <html>
 
     <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
         <link rel="stylesheet" href="style/auth.css">
     </head>
     <body>
     <video id="background-video" autoplay loop muted>
-        <source src="https://www.dropbox.com/scl/fi/1432mc6bn0x5aawndqu5r/bg-4k.mp4?rlkey=f112qbs5l7y12r4lgiox08ofz&st=8e9h04db&dl=1" type="video/mp4">
-    </video>
+            <source src="https://www.dropbox.com/scl/fi/1432mc6bn0x5aawndqu5r/bg-4k.mp4?rlkey=f112qbs5l7y12r4lgiox08ofz&st=8e9h04db&dl=1" type="video/mp4">
+        </video>
         
 
         <div class="container">

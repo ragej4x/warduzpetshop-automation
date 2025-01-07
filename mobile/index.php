@@ -14,7 +14,7 @@
 
 
 //path kung saan nyo gusto lagay dapat sa first line may '/'
-$configFilePath = __DIR__ . '/live-monitor/config.txt';
+$configFilePath = __DIR__ . '/../live-monitor/config.txt';
 
 
 //convert lng sa RGB
@@ -87,36 +87,36 @@ $temperature_log_live   = file_get_contents("https://www.dropbox.com/scl/fi/slzk
 $access_token = file_get_contents('https://www.dropbox.com/scl/fi/ndyto6jyyqu8i8e8xlj95/access_token.txt?rlkey=7so71j1jez8scfoiinhosu0gj&st=tvhd8qr3&dl=1');
 
 if ($ph_log !== false) {
-    file_put_contents("live-monitor/ph_log.txt", $ph_log);
+    file_put_contents("../live-monitor/ph_log.txt", $ph_log);
 }
 
 if ($ph_log_live !== false) {
-    file_put_contents("live-monitor/ph_log_live.txt", $ph_log_live);
+    file_put_contents("../live-monitor/ph_log_live.txt", $ph_log_live);
 }
 
 
 if ($temperature_log !== false) {
-    file_put_contents("live-monitor/temperature_log.txt", $temperature_log);
+    file_put_contents("../live-monitor/temperature_log.txt", $temperature_log);
 }
 
 
 if ($temperature_log_live !== false) {
-    file_put_contents("live-monitor/temperature_log_live.txt", $temperature_log_live);
+    file_put_contents("../live-monitor/temperature_log_live.txt", $temperature_log_live);
 }
 
 if ($access_token !== false) {
-    file_put_contents("live-monitor/access_token.txt", $access_token);
+    file_put_contents("../live-monitor/access_token.txt", $access_token);
 }
 
 
 
-$accessToken = trim(file_get_contents('live-monitor/access_token.txt'));
+$accessToken = trim(file_get_contents('../live-monitor/access_token.txt'));
 
 if (!$accessToken) {
     die("Error: Access token not found.");
 }
 
-$localFilePath = 'live-monitor/config.txt';
+$localFilePath = '../live-monitor/config.txt';
 
 $dropboxPath = '/live-monitor/config.txt'; 
 
@@ -148,11 +148,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 $response = curl_exec($ch);
 
-if (curl_errno($ch)) {
-    echo 'cURL Error: ' . curl_error($ch);
-} else {
-    echo 'Response: ' . $response;
-}
+
 
 curl_close($ch);
 
@@ -163,133 +159,109 @@ curl_close($ch);
 
 <html>
 
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script>
-        if (window.innerWidth <= 768) {
-            window.location.href = "mobile/index.php";
-        }
-    </script>
+    <title>Config</title>
+    <link rel="stylesheet" href="style/index.css">
+</head>
 
-        <title>Config</title>
-        <link rel="stylesheet" href="style/index.css">
-    </head>
-    <body>
-        <video id="background-video" autoplay loop muted>
-            <source src="https://www.dropbox.com/scl/fi/1432mc6bn0x5aawndqu5r/bg-4k.mp4?rlkey=f112qbs5l7y12r4lgiox08ofz&st=8e9h04db&dl=1" type="video/mp4">
-        </video>
+<body>
+    <video id="background-video" autoplay loop muted>
+        <source src="https://www.dropbox.com/scl/fi/1432mc6bn0x5aawndqu5r/bg-4k.mp4?rlkey=f112qbs5l7y12r4lgiox08ofz&st=8e9h04db&dl=1" type="video/mp4">
+    </video>
 
-
-        <div class="container "> 
-
-            <div class='banner'><h3></h3></div>
-            <div class="config-body">
-
-                <div class="monitor-table">
-                    <table>
-                    <tr>
-                        <th>Water Temperature <img id="temp-warning" style="width: 30px; position: absolute; margin-left: 55px; margin-top: -1.5%;" src="media/warning.png" alt=""></th>
-                        <th>pH Level  <img id="ph-warning" style="width: 30px; position: absolute; margin-left: 6%; margin-top: -1.5%;" src="media/warning.png" alt=""></th>
-                    </tr>
-                    <tr>
-                        <td><div style="text-align:center;" id="temp-value"></div></td>
-                        <td><div style="text-align:center;" id="ph-value"></div></td>
-
-                    </tr>
-                    <tr>
-                    <td><div id='log-container-temp' style="height: 100px; width:auto; margin-left: auto; overflow: auto; border: 1px solid #ccc; font-family: monospace;"><?php 
-      $file_content = file_get_contents("live-monitor/temperature_log.txt");
-
-      $lines = explode("\n", $file_content);
-
-
-      foreach ($lines as $line) {
-
-          $line = trim($line);
-          if (!empty($line)) {
-              echo htmlspecialchars($line) . "<br />";
-          }
-      }
-    ?></div>
-    
-
-</td>
-
-        <td><div id='log-container-ph' style="height: 100px; width:auto; margin-left: auto; overflow: auto; border: 1px solid #ccc; font-family: monospace;"><?php 
-      $file_content = file_get_contents("live-monitor/ph_log.txt");
-
-      $lines = explode("\n", $file_content);
-
-      foreach ($lines as $line) {
-          $line = trim($line);
-          if (!empty($line)) {
-              echo htmlspecialchars($line) . "<br />";
-          }
-      }
-    ?></div></td>
-
-            
-        </tr>
-
-        <table style="width:500px; margin-top:10px;">
-
-        <form action="" method="post" id="colorForm">
-        <tr>
-        <th>LED Color Config</th>
-        <th>LED Modes</th>
-        </tr>
-        <tr>
-    <td>
-        <input type="color" id="color" name="color" value="<?php echo $color; ?>" onchange="updateColor()">
-
-    </td>
-    <td>
-        <button class="led-btn" type="submit" name="mode" value="0" onsubmit="this.submit()">Static</button>
-        <button class="led-btn" type="submit" name="mode" value="1" onsubmit="this.submit()">Blink</button>
-        <button class="led-btn" type="submit" name="mode" value="2" onsubmit="this.submit()" >Rainbow</button>
-        <button class="led-btn" type="submit" name="mode" value="3" onsubmit="this.submit()">Off</button>
-    </td>
-      
-</tr>
-
-      
-
-
-    </form>
-    <a href="fish_info.html" style="text-decoration: none; color:black;"><button id="info">Fish information</idbutton>  </a>
-
-    <a href="about.html" style="text-decoration: none; color:black;"><button id="about">How to use</idbutton>  </a>
-    </table>
-    
-    </table>
-    
-
-    
-    </div>
-    
-
-        
-        <footer>
-        <!--<a  href="how_to_use.html" style="text-align:right;">How to use</a>-->
-        
-        <p>2024 @Test All right reserved or about us </p>
-        
-
-        </footer>
-        
+    <div class="container">
+        <div class="banner">
+            <h3>Configuration Panel</h3>
         </div>
 
-    
-    </body>
+        <div class="config-body">
+            <div class="monitor-table">
+                <table>
+                    <tr>
+                        <th>Water Temperature <img id="temp-warning" style="width: 15px; margin-left: auto; margin-right: auto; max-width: fit-content;" src="../media/warning.png" alt=""></th>
+                        <th>pH Level <img id="ph-warning" style="width: 15px; margin-left: auto; margin-right: auto; max-width: fit-content;" src="../media/warning.png" alt=""></th>
+                    </tr>
+                    <tr>
+                        <td><div id="temp-value" style="text-align: center;"></div> </td>
+                        <td><div id="ph-value" style="text-align: center;"> </div> </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="log-container-temp" class="log-container">
+                                <?php 
+                                    $file_content = file_get_contents("../live-monitor/temperature_log.txt");
+                                    $lines = explode("\n", $file_content);
+                                    foreach ($lines as $line) {
+                                        $line = trim($line);
+                                        if (!empty($line)) {
+                                            echo htmlspecialchars($line) . "<br />";
+                                        }
+                                    }
+                                ?>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="log-container-ph" class="log-container">
+                                <?php 
+                                    $file_content = file_get_contents("../live-monitor/ph_log.txt");
+                                    $lines = explode("\n", $file_content);
+                                    foreach ($lines as $line) {
+                                        $line = trim($line);
+                                        if (!empty($line)) {
+                                            echo htmlspecialchars($line) . "<br />";
+                                        }
+                                    }
+                                ?>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <form action="" method="post" id="colorForm">
+                    <table>
+                        <tr>
+                            <th>LED Color Config</th>
+                            <th>LED Modes</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="color" id="color" name="color" value="#fca18f" onchange="updateColor()">
+                            </td>
+                            <td class="button-group">
+                                <button class="led-btn" type="submit" name="mode" value="0">Static</button>
+                                <button class="led-btn" type="submit" name="mode" value="1">Blink</button>
+                                <button class="led-btn" type="submit" name="mode" value="2">Rainbow</button>
+                                <button class="led-btn" type="submit" name="mode" value="3">Off</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                <div class="links">
+                    <a href="fish_info.html"><button id="info" type="button">Fish Information</button></a>
+                    <a href="about.html"><button id="about" type="button">How to Use</button></a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>2024 © Test All Rights Reserved | <a href="about.html">About Us</a></p>
+        </footer>
+    </div>
+</body>
+
+
+
 
 
 
 
     <script>
-        
-
-
 
     function updateColor() {
         document.getElementById("colorForm").submit();
@@ -313,7 +285,7 @@ curl_close($ch);
     //ddisplay lng ung live temp and pH
     async function fetchLiveData() {
         try {
-            const response = await fetch('live-monitor/get_live_data.php'); 
+            const response = await fetch('../live-monitor/get_live_data.php'); 
             const data = await response.json();
 
             if (data.ph > 8.5){
@@ -354,14 +326,5 @@ curl_close($ch);
 
     setInterval(fetchLiveData, 1000);
     fetchLiveData(); // loadss
-
-
-
-
-
-
-
-
-
     </script>
 </html>

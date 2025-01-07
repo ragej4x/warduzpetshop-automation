@@ -8,7 +8,7 @@ ph_live_file = "ph_log_live.txt"
 temp_live_file = "temperature_log_live.txt"
 ph_history_file = "ph_log.txt"
 temp_history_file = "temperature_log.txt"
-config_file = "config.ini" 
+config_file = "config.txt" 
 
 last_modified_time = 0
 

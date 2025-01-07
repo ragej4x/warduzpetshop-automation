@@ -1,0 +1,140 @@
+/* General Styles */
+body, html {
+    margin-top: -50px;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+#background-video {
+    z-index: -100;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container {
+    
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+    text-align: center;
+}
+
+.banner {
+    background-color: #34538a;
+    color: white;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+}
+
+.config-body {
+    background-color: #7AB2D3;
+    padding: 20px;
+    border-radius: 0px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.monitor-table {
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    border-spacing: 10px;
+}
+
+th, td {
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #D8D2C2;
+}
+
+.log-container {
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    font-family: monospace;
+    background-color: white;
+    padding: 10px;
+}
+
+.led-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #fca18f;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.led-btn:hover {
+    background-color: #fcc2b6;
+}
+
+#color {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.links {
+    margin-top: -10px;
+}
+
+.links a button {
+    width: 180px;
+    padding: 5px;
+    margin: 2px;
+    background-color: #fca18f;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.links a button:hover {
+    background-color: #fcc2b6;
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+footer a {
+    color: black;
+    text-decoration: none;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .config-body {
+        padding: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 5px;
+    }
+
+    .links a button {
+        width: 100%;
+        font-size: 14px;
+    }
+}
